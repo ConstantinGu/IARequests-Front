@@ -4,40 +4,39 @@ document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById("iaRequestForm");
   const messageArea = document.getElementById("messageArea");
 
-  // Sur "submit", on intercepte pour faire un fetch
+  // Intercepter la soumission du formulaire
   form.addEventListener("submit", function(event) {
-    event.preventDefault(); // Évite le rechargement de la page
+    event.preventDefault(); // Empêche le rechargement de la page
 
-    // Récupérer les données sous forme de FormData
+    // Récupère les champs du formulaire sous forme de FormData
     const formData = new FormData(form);
 
+    // Envoi vers l’Apps Script
     fetch(APPS_SCRIPT_URL, {
       method: "POST",
-      // IMPORTANT :
-      // 1) NE PAS mettre "Content-Type" à "application/json"
-      // 2) NE PAS définir "mode: 'cors'" (on le laisse par défaut)
-      // => Ainsi, pas de preflight et pas de blocage CORS
+      // Pas de mode: "cors", pas de "Content-Type" custom => pas de préflight
       body: formData
     })
-    // On attend la réponse en "text"
-    .then(response => response.text())
+    .then(response => response.text())        // On lit la réponse en "texte"
     .then(text => {
-      // L'Apps Script renvoie un JSON, on parse le texte pour accéder au champ "status"
       let json;
       try {
-        json = JSON.parse(text);
+        json = JSON.parse(text);             // Parse en JSON
       } catch(e) {
         throw new Error("Réponse invalide du serveur");
       }
 
       if (json.status === "success") {
+        // Message de succès
         messageArea.innerHTML = `
           <div class="alert alert-success">
             Votre demande a bien été enregistrée !
           </div>
         `;
+        // On réinitialise le formulaire
         form.reset();
       } else {
+        // Message d’erreur renvoyé par le script
         messageArea.innerHTML = `
           <div class="alert alert-danger">
             Une erreur est survenue : ${json.message}
@@ -46,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     })
     .catch(error => {
+      // Si la requête a échoué ou qu’on ne reçoit pas une réponse valable
       console.error("Erreur:", error);
       messageArea.innerHTML = `
         <div class="alert alert-danger">
-          Une erreur est survenue : ${JSON.stringify(json.message)}
+          Une erreur est survenue : ${error}
         </div>
       `;
-
     });
   });
 });
