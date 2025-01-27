@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formulaire IA Requests</title>
+  <!-- Lien vers Bootstrap (CDN) pour avoir un design rapide -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  >
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+  <h1 class="mb-4">Demande de projet IA</h1>
+  
+  <!-- Zone d'affichage des messages de succès ou d'erreur -->
+  <div id="messageArea" class="mb-3"></div>
+  
+  <form id="iaRequestForm">
+    <div class="mb-3">
+      <label class="form-label">Nom du demandeur</label>
+      <input type="text" class="form-control" name="nomDemandeur" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Département</label>
+      <input type="text" class="form-control" name="departement" placeholder="Ex: Marketing, RH..." required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Besoin IA</label>
+      <input type="text" class="form-control" name="besoin" placeholder="Ex: RPA, Chatbot, etc." required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description détaillée</label>
+      <textarea class="form-control" rows="4" name="description" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Urgence</label>
+      <select class="form-select" name="urgence">
+        <option value="Faible">Faible</option>
+        <option value="Moyenne">Moyenne</option>
+        <option value="Élevée">Élevée</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+  </form>
+</div>
+
+<!-- Fichier JS -->
+<script src="script.js"></script>
+<!-- Bootstrap JavaScript (optionnel si besoin de composants dynamiques) -->
+<script 
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>
