@@ -49,9 +49,10 @@ document.addEventListener("DOMContentLoaded", function() {
       console.error("Erreur:", error);
       messageArea.innerHTML = `
         <div class="alert alert-danger">
-          Erreur lors de l'envoi des données.
+          Une erreur est survenue : ${JSON.stringify(json.message)}
         </div>
       `;
+
     });
   });
 });
